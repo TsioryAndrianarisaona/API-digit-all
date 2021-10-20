@@ -23,11 +23,8 @@ public class User {
     private String name;
     @Column(name="firstname")
     private String firstName;
-    private String telephone;
-    private String email;
-    private Date birthday;
-    @Column(name = "isadmin")
-    private int isAdmin;
+    private String role;
+    private int ministry;
 
     @OneToMany
     private List<Token> tokenList;

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@ControllerAdvice
+@CrossOrigin
 public class AuthenticationController {
     @Autowired
     UserService userService;

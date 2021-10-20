@@ -19,8 +19,8 @@ import java.util.List;
 
 @Component
 public class UserServiceImpl implements UserService {
-//    Error message
-    private static final String ERROR_LOGIN="Vous n\'avez pas accès à cette application";
+    //    Error message
+    private static final String ERROR_LOGIN = "Vous n\'avez pas accès à cette application";
 
     @Autowired
     private UserRepository userRepository;
@@ -30,36 +30,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Token login(User user) throws Exception {
-        Token token=new Token();
-        List<User> users= this.userRepository.findByLogin(user.getLogin());
-        if(users.size()==0){
+        Token token = new Token();
+        List<User> users = this.userRepository.findByLogin(user.getLogin());
+        if (users.size() == 0) {
             throw new Exception(ERROR_LOGIN);
         }
-        boolean found=true;
-        for (User temp:users){
-            if(temp.getPassword().compareToIgnoreCase(EncryptHelper.encrypt(user.getPassword()))==0){
-                if(temp.getIsAdmin()==user.getIsAdmin()){
-                    found=true;
-                    token=tokenService.generateToken(temp);
-                }
-                else
-                    throw new Exception(ERROR_LOGIN);
+        boolean found = true;
+        for (User temp : users) {
+            if (temp.getPassword().compareToIgnoreCase(EncryptHelper.encrypt(user.getPassword())) == 0) {
+                found = true;
+                token = tokenService.generateToken(temp);
                 break;
             }
         }
-        if(!found)
+        if (!found)
             throw new Exception(ERROR_LOGIN);
-       return token;
+        return token;
     }
 
     @Transactional(rollbackOn = {Exception.class})
-    public Token signUp(User user)throws Exception{
-        try{
+    public Token signUp(User user) throws Exception {
+        try {
             user.setPassword(EncryptHelper.encrypt(user.getPassword()));
             this.userRepository.save(user);
             return this.tokenService.generateToken(user);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
     }

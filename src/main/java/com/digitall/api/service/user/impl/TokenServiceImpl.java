@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public class TokenServiceImpl implements TokenService {
     //    Error message
@@ -64,6 +66,18 @@ public class TokenServiceImpl implements TokenService {
             if(token.getValidity().before(DateHelpers.now()))
                 throw new Exception(ERROR_SESSION);
             return token.getUser();
+        }
+        catch (Exception e){
+            throw e;
+        }
+    }
+    public User checkTokenValidity(Map<String,Object> httpHeaders)throws Exception{
+        try {
+            String bearer= httpHeaders.get("authorization").toString();
+            if(bearer==null){
+                throw new Exception(ERROR_SESSION);
+            }
+            return this.checkTokenValidity(bearer.split("Bearer ")[1]);
         }
         catch (Exception e){
             throw e;
