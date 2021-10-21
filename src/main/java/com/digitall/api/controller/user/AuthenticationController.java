@@ -20,7 +20,10 @@ public class AuthenticationController {
     {
         try {
             Token token=userService.login(user);
-            return new JsonModel(200,"hello",token.getToken());
+            Map<String, Object> response=new HashMap<String, Object>();
+            response.put("token",token.getToken());
+            response.put("ministry",user.getMinistryObject());
+            return new JsonModel(200,"ok",response);
         }
         catch (Exception e){
             return new JsonModel(500,e.getMessage(),null);

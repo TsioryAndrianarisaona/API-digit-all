@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS BURGLARY;
+DROP TABLE IF EXISTS EMPOWERMENT;
 DROP TABLE IF EXISTS DECLARATION;
 DROP TABLE IF EXISTS CITIZEN;
 DROP TABLE IF EXISTS TOKEN;
@@ -68,4 +70,24 @@ CREATE TABLE DECLARATION(
     CONSTRAINT fk_citizen_declaration FOREIGN KEY (citizen) REFERENCES CITIZEN(id),
     CONSTRAINT fk_user_declaration FOREIGN KEY (digitall_user) REFERENCES DIGITALL_USER(id),
     CONSTRAINT fk_ministry_declaration FOREIGN KEY (ministry) REFERENCES MINISTRY(id)
+);
+CREATE TABLE EMPOWERMENT(
+    id SERIAL PRIMARY KEY,
+    value TEXT,
+    ministry INT,
+    state INT,
+    CONSTRAINT fk_empowerment_ministry FOREIGN KEY(ministry) REFERENCES  MINISTRY(id)
+);
+INSERT INTO EMPOWERMENT VALUES (default ,'Déclaration de vol',1,1);
+INSERT INTO EMPOWERMENT VALUES (default ,'Bagarre de rue',1,1);
+--data of empowerment
+CREATE TABLE BURGLARY(
+    id SERIAL PRIMARY KEY,
+    date_burglary TIMESTAMP,
+    longitude float,
+    latitude float,
+    place VARCHAR (100),
+    description TEXT,
+    digitall_user int,
+    CONSTRAINT fk_burglary_declaration FOREIGN KEY (digitall_user) REFERENCES DIGITALL_USER(id)
 );

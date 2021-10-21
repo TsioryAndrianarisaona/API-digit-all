@@ -1,7 +1,10 @@
 package com.digitall.api.model.user;
 
 
+import com.digitall.api.model.ministry.Ministry;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -28,4 +31,9 @@ public class User {
 
     @OneToMany
     private List<Token> tokenList;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ministry",insertable = false,updatable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Ministry ministryObject;
 }

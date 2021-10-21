@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
             if (temp.getPassword().compareToIgnoreCase(EncryptHelper.encrypt(user.getPassword())) == 0) {
                 found = true;
                 token = tokenService.generateToken(temp);
+                user.setMinistryObject(temp.getMinistryObject());
                 break;
             }
         }
