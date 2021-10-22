@@ -17,9 +17,12 @@ public class Citizen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(name = "firstname")
     private String firstName;
     private String picture;
     private Date birthday;
     private int sex;
+    @Column(name = "qrcode")
     private String qrCode;
+    private String phone;
 }

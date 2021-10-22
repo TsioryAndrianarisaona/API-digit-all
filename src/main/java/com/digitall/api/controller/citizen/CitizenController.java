@@ -6,16 +6,29 @@ import com.digitall.api.service.citizen.CitizenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @CrossOrigin
 public class CitizenController {
     @Autowired
     private CitizenService citizenService;
 
-    @RequestMapping(path="/user/{qrCode}", method = RequestMethod.GET)
+    @RequestMapping(path="/scan/{qrCode}", method = RequestMethod.GET)
     public JsonModel showUserByToken(@PathVariable("qrCode") String qrCode){
         try {
             return new JsonModel(Constante.SUCCESS_CODE,null,citizenService.findCitizenWithQrCode(qrCode));
+        }
+        catch (Exception e){
+
+            return new JsonModel(Constante.ERROR_CODE,e.getMessage(),null);
+        }
+    }
+    @RequestMapping(path = "/scan/authenticate",method = RequestMethod.POST)
+    public JsonModel finUserByTokenAndCode(@RequestBody Map<String,Object> requestBody){
+        try {
+            return new JsonModel(Constante.SUCCESS_CODE,"authenticate",this.citizenService.scanAndAuthenticate(requestBody));
         }
         catch (Exception e){
             return new JsonModel(Constante.ERROR_CODE,e.getMessage(),null);

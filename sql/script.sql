@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS CARTVALIDATION;
 DROP TABLE IF EXISTS BURGLARY;
 DROP TABLE IF EXISTS EMPOWERMENT;
 DROP TABLE IF EXISTS DECLARATION;
@@ -51,11 +52,12 @@ CREATE TABLE CITIZEN(
     picture TEXT,
     birthday DATE,
     sex INT,
-    qrCode TEXT
+    qrCode TEXT,
+    phone VARCHAR(30)
 );
-INSERT INTO CITIZEN VALUES (default ,'Andrianaivoravelona','Sandy Lovanirina Jonathan','','1998-11-27',1,'');
-INSERT INTO CITIZEN VALUES (default ,'Andrianarisaona','Misaina Tsiory Tafita','','1999-08-21',1,'');
-INSERT INTO CITIZEN VALUES (default ,'Rakozotozanany','Mialy','','1998-07-14',0,'');
+INSERT INTO CITIZEN VALUES (default ,'Andrianaivoravelona','Sandy Lovanirina Jonathan','','1998-11-27',1,'333F0662D395FBCA621F63769E469FC4665010C4','261346969433');
+INSERT INTO CITIZEN VALUES (default ,'Andrianarisaona','Misaina Tsiory Tafita','','1999-08-21',1,'E9AC5601CEDD8747FDD7C911329F9A0BA8B78A19','261346969433');
+INSERT INTO CITIZEN VALUES (default ,'Rakozotozanany','Mialy','','1998-07-14',0,'BBD60495FC36A9FE28159B64EB815F9CD24EC0B0','261346969433');
 CREATE TABLE DECLARATION(
     id SERIAL PRIMARY KEY,
     citizen INT,
@@ -90,4 +92,12 @@ CREATE TABLE BURGLARY(
     description TEXT,
     digitall_user int,
     CONSTRAINT fk_burglary_declaration FOREIGN KEY (digitall_user) REFERENCES DIGITALL_USER(id)
+);
+CREATE TABLE CARTVALIDATION(
+    id SERIAL PRIMARY KEY,
+    citizen int,
+    date_validation TIMESTAMP,
+    code INT,
+    state int ,
+    CONSTRAINT fk_validation_citizen FOREIGN KEY (citizen) REFERENCES CITIZEN(id)
 );
