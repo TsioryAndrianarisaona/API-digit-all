@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS PERMIS;
 DROP TABLE IF EXISTS FOLDER_DOCUMENT;
 DROP TABLE IF EXISTS FOLDER;
 DROP TABLE IF EXISTS DOCUMENT;
@@ -59,11 +60,13 @@ CREATE TABLE CITIZEN(
     qrCode TEXT,
     phone VARCHAR(30),
     fokontany VARCHAR (100),
-    commune VARCHAR (100)
+    commune VARCHAR (100),
+    address TEXT
 );
-INSERT INTO CITIZEN VALUES (default ,'Andrianaivoravelona','Sandy Lovanirina Jonathan','','1998-11-27',1,'333F0662D395FBCA621F63769E469FC4665010C4','261346969433','FIATA','TANA REV');
-INSERT INTO CITIZEN VALUES (default ,'Andrianarisaona','Misaina Tsiory Tafita','','1999-08-21',1,'E9AC5601CEDD8747FDD7C911329F9A0BA8B78A19','261346969433','Ambanidia-Miandrarivo','TANA REV');
-INSERT INTO CITIZEN VALUES (default ,'Rakozotozanany','Mialy','','1998-07-14',0,'BBD60495FC36A9FE28159B64EB815F9CD24EC0B0','261346969433','Androndrakely-SaropodyAntonta','TANA REV');
+INSERT INTO CITIZEN VALUES (default ,'Andrianaivoravelona','Sandy Lovanirina Jonathan','','1998-11-27',1,'333F0662D395FBCA621F63769E469FC4665010C4','261346969433','FIATA','TANA REV','Lot VC 5 Ambanidia');
+INSERT INTO CITIZEN VALUES (default ,'Andrianarisaona','Misaina Tsiory Tafita','','1999-08-21',1,'E9AC5601CEDD8747FDD7C911329F9A0BA8B78A19','261346969433','Ambanidia-Miandrarivo','TANA REV','Lot IBM 25 Bis Tsaralalana');
+INSERT INTO CITIZEN VALUES (default ,'Rakozotozanany','Mialy','','1998-03-31',0,'BBD60495FC36A9FE28159B64EB815F9CD24EC0B0','261346969433','Androndrakely-SaropodyAntonta','TANA REV','Lot 130 67Ha Sud');
+INSERT INTO CITIZEN VALUES (default ,'Ramanantsoa','Anjara','','1997-04-30',0,'BBD60495FC36A9FE28159B64EB815F9CD24EC0B0','261346969433','Androndrakely-SaropodyAntonta','TANA REV','2S 44 Anjanahary');
 CREATE TABLE DECLARATION(
     id SERIAL PRIMARY KEY,
     citizen INT,
@@ -153,3 +156,22 @@ CREATE TABLE FOLDER_DOCUMENT(
 INSERT INTO  FOLDER_DOCUMENT VALUES (default ,1,1);
 INSERT INTO  FOLDER_DOCUMENT VALUES (default ,1,3);
 select DOCUMENT.*  from DOCUMENT left join FOLDER_DOCUMENT FD on DOCUMENT.id = FD.document WHERE FD.folder = 1;
+CREATE TABLE PERMIS(
+    id SERIAL PRIMARY KEY,
+    numero VARCHAR (100),
+    delivrance DATE,
+    place VARCHAR (100),
+    a INT ,
+    ap INT,
+    b INT,
+    c INT,
+    d INT,
+    e INT,
+    f INT,
+    citizen INT ,
+    CONSTRAINT fk_permis_permiscitizen FOREIGN KEY (citizen) REFERENCES CITIZEN(id)
+);
+
+INSERT INTO PERMIS VALUES (default ,'0545099T','2015-07-01','Antananarivo',0,0,1,0,0,0,0,1);
+INSERT INTO PERMIS VALUES (default ,'0545099T','2017-06-04','Antananarivo',0,0,1,0,0,0,0,2);
+INSERT INTO PERMIS VALUES (default ,'0545099T','2018-01-07','Antananarivo',0,0,1,0,0,0,0,3);

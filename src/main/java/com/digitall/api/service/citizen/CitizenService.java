@@ -8,6 +8,7 @@ import java.util.Map;
 
 public interface CitizenService {
     public Citizen findCitizenWithQrCode(String qrCode) throws Exception;
+    public Citizen patrouiller(Map<String, Object> httpHeaders,Map<String,Object> requestBody) throws Exception;
     public List<Declaration> getAllDeclarations(String qrCode) throws Exception;
     public Map<String , Object> scanAndAuthenticate(Map<String,Object> requestBody) throws Exception;
 }

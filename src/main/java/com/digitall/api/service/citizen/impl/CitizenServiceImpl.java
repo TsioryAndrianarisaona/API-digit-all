@@ -1,5 +1,7 @@
 package com.digitall.api.service.citizen.impl;
 
+import com.digitall.api.helpers.DateHelpers;
+import com.digitall.api.model.bean.Constante;
 import com.digitall.api.model.citizen.Citizen;
 import com.digitall.api.model.declaration.Declaration;
 import com.digitall.api.model.user.User;
@@ -7,6 +9,8 @@ import com.digitall.api.repository.citizen.CitizenRepository;
 import com.digitall.api.service.citizen.CartValidationService;
 import com.digitall.api.service.citizen.CitizenService;
 import com.digitall.api.service.declaration.DeclarationService;
+import com.digitall.api.service.user.UserService;
+import com.digitall.api.service.user.impl.TokenServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +28,9 @@ public class CitizenServiceImpl implements CitizenService {
     private DeclarationService declarationService;
     @Autowired
     private CartValidationService cartValidationService;
+
+    @Autowired
+    private TokenServiceImpl tokenService;
     @Override
     public Citizen findCitizenWithQrCode(String qrCode) throws Exception {
         try {
@@ -64,8 +71,30 @@ public class CitizenServiceImpl implements CitizenService {
                 result.put("anyCode",true);
                 result.put("citizen",citizen);
             }
-            System.out.println("humm");
             return result;
+        }
+        catch (Exception e){
+            throw e;
+        }
+    }
+
+    @Transactional
+    @Override
+    public Citizen patrouiller(Map<String, Object> httpHeaders,Map<String,Object> requestBody) throws Exception {
+        try {
+            User user=this.tokenService.checkTokenValidity(httpHeaders);
+            String qrCode=requestBody.get("qrCode") != null ? requestBody.get("qrCode").toString() : "";
+            String longitude=requestBody.get("longitude") != null ? requestBody.get("longitude").toString() : "";
+            String latitude=requestBody.get("latitude") != null ? requestBody.get("latitude").toString() : "";
+            Citizen citizen=this.findCitizenWithQrCode(qrCode);
+            Declaration declaration=new Declaration();
+            declaration.setLongitude(Float.valueOf(longitude));
+            declaration.setLatitude(Float.valueOf(latitude));
+            declaration.setCitizen(citizen.getId().intValue());
+            declaration.setTitle("Scan de patrouille");
+            declaration.setContent(citizen.getName()+" "+citizen.getFirstName()+" a été scanné par "+user.getName()+" "+user.getFirstName());
+            this.declarationService.saveDeclaration(httpHeaders,declaration);
+            return citizen;
         }
         catch (Exception e){
             throw e;

@@ -25,6 +25,15 @@ public class CitizenController {
             return new JsonModel(Constante.ERROR_CODE,e.getMessage(),null);
         }
     }
+    @RequestMapping(path = "/scan/patrouille",method = RequestMethod.POST)
+    public JsonModel scanQr(@RequestHeader(required = false) Map<String, Object> httpHeaders,@RequestBody Map<String,Object> requestBody){
+        try {
+            return new JsonModel(Constante.SUCCESS_CODE,null,this.citizenService.patrouiller(httpHeaders,requestBody));
+        }
+        catch (Exception e){
+            return new JsonModel(Constante.ERROR_CODE, e.getMessage(), null);
+        }
+    }
     @RequestMapping(path = "/scan/authenticate",method = RequestMethod.POST)
     public JsonModel finUserByTokenAndCode(@RequestBody Map<String,Object> requestBody){
         try {
