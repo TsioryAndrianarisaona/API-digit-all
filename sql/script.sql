@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS FOLDER_DOCUMENT;
+DROP TABLE IF EXISTS FOLDER;
+DROP TABLE IF EXISTS DOCUMENT;
+DROP TABLE IF EXISTS NIVEAU;
 DROP TABLE IF EXISTS CARTVALIDATION;
 DROP TABLE IF EXISTS BURGLARY;
 DROP TABLE IF EXISTS EMPOWERMENT;
@@ -53,11 +57,13 @@ CREATE TABLE CITIZEN(
     birthday DATE,
     sex INT,
     qrCode TEXT,
-    phone VARCHAR(30)
+    phone VARCHAR(30),
+    fokontany VARCHAR (100),
+    commune VARCHAR (100)
 );
-INSERT INTO CITIZEN VALUES (default ,'Andrianaivoravelona','Sandy Lovanirina Jonathan','','1998-11-27',1,'333F0662D395FBCA621F63769E469FC4665010C4','261346969433');
-INSERT INTO CITIZEN VALUES (default ,'Andrianarisaona','Misaina Tsiory Tafita','','1999-08-21',1,'E9AC5601CEDD8747FDD7C911329F9A0BA8B78A19','261346969433');
-INSERT INTO CITIZEN VALUES (default ,'Rakozotozanany','Mialy','','1998-07-14',0,'BBD60495FC36A9FE28159B64EB815F9CD24EC0B0','261346969433');
+INSERT INTO CITIZEN VALUES (default ,'Andrianaivoravelona','Sandy Lovanirina Jonathan','','1998-11-27',1,'333F0662D395FBCA621F63769E469FC4665010C4','261346969433','FIATA','TANA REV');
+INSERT INTO CITIZEN VALUES (default ,'Andrianarisaona','Misaina Tsiory Tafita','','1999-08-21',1,'E9AC5601CEDD8747FDD7C911329F9A0BA8B78A19','261346969433','Ambanidia-Miandrarivo','TANA REV');
+INSERT INTO CITIZEN VALUES (default ,'Rakozotozanany','Mialy','','1998-07-14',0,'BBD60495FC36A9FE28159B64EB815F9CD24EC0B0','261346969433','Androndrakely-SaropodyAntonta','TANA REV');
 CREATE TABLE DECLARATION(
     id SERIAL PRIMARY KEY,
     citizen INT,
@@ -101,3 +107,49 @@ CREATE TABLE CARTVALIDATION(
     state int ,
     CONSTRAINT fk_validation_citizen FOREIGN KEY (citizen) REFERENCES CITIZEN(id)
 );
+CREATE TABLE NIVEAU(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR (100),
+    photo VARCHAR (50),
+    type VARCHAR (50)
+);
+INSERT INTO NIVEAU values (default , 'Fokontany','group','font-awesome');
+INSERT INTO NIVEAU values (default , 'Commune','home','antdesign');
+INSERT INTO NIVEAU values (default , 'Tribunal','hammer','font-awesome-5');
+INSERT INTO NIVEAU values (default , 'Office du Bacc','cast-education','material-community-icons');
+
+CREATE TABLE DOCUMENT (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR (100),
+    validity INT,
+    niveau INT,
+    CONSTRAINT fk_document_niveau FOREIGN KEY (niveau) REFERENCES NIVEAU(id)
+);
+
+INSERT INTO DOCUMENT VALUES (default ,'Certificat de résidence',90,1);
+INSERT INTO DOCUMENT VALUES (default ,'Certificat de vie',90,1);
+INSERT INTO DOCUMENT VALUES (default ,'Acte de naissance',90,2);
+INSERT INTO DOCUMENT VALUES (default ,'Acte de naissance traduit',90,3);
+INSERT INTO DOCUMENT VALUES (default ,'Bulletin numéro 3',-1,3);
+INSERT INTO DOCUMENT VALUES (default ,'Diplôme bacc',-1,4);
+INSERT INTO DOCUMENT VALUES (default ,'Relevé de note Bacc',-1,4);
+
+CREATE TABLE FOLDER(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR (100),
+    citizen int,
+    CONSTRAINT fk_folder_citizen FOREIGN KEY (citizen) REFERENCES CITIZEN(id)
+);
+INSERT INTO FOLDER VALUES (default ,'Document passeport',1);
+INSERT INTO FOLDER VALUES (default ,'Document inscription université',1);
+
+CREATE TABLE FOLDER_DOCUMENT(
+  id SERIAL PRIMARY KEY,
+  folder INT,
+  document INT,
+  CONSTRAINT fk_folder_FOLDER_DOCUMENT FOREIGN KEY (folder) REFERENCES FOLDER(id),
+  CONSTRAINT fk_document_FOLDER_DOCUMENT FOREIGN KEY (document) REFERENCES DOCUMENT(id)
+);
+INSERT INTO  FOLDER_DOCUMENT VALUES (default ,1,1);
+INSERT INTO  FOLDER_DOCUMENT VALUES (default ,1,3);
+select DOCUMENT.*  from DOCUMENT left join FOLDER_DOCUMENT FD on DOCUMENT.id = FD.document WHERE FD.folder = 1;

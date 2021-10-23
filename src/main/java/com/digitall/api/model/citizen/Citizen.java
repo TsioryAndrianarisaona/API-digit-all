@@ -25,4 +25,6 @@ public class Citizen {
     @Column(name = "qrcode")
     private String qrCode;
     private String phone;
+    private String fokontany;
+    private String commune;
 }
