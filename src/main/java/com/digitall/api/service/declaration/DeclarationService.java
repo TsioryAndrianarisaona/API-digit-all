@@ -11,4 +11,5 @@ public interface DeclarationService {
     public List<Declaration> getDeclarations(Map<String,Object> httpHeaders,String qrCode) throws Exception;
     public List<Declaration> getDeclarations(Citizen citizen) throws Exception;
     public Declaration saveDeclaration(Map<String, Object> httpHeaders,Declaration declaration) throws Exception;
+    public List<Declaration> getPoliceDeclaration()throws Exception;
 }

@@ -25,9 +25,19 @@ public class DeclarationController {
             return new JsonModel(Constante.ERROR_CODE,e.getMessage(),null);
         }
     }
+    @RequestMapping(path="/declarations/save", method = RequestMethod.GET)
     public JsonModel saveDeclarationOfCitizen(@RequestHeader(required = false) Map<String, Object> httpHeaders, @RequestBody Declaration declaration){
         try {
             return new JsonModel(Constante.SUCCESS_CODE,null,declarationService.saveDeclaration(httpHeaders,declaration));
+        }
+        catch (Exception e){
+            return new JsonModel(Constante.ERROR_CODE,e.getMessage(),null);
+        }
+    }
+    @RequestMapping(path = "/declarations/policeweb",method = RequestMethod.GET)
+    public JsonModel declarationsPolice(){
+        try {
+            return new JsonModel(Constante.SUCCESS_CODE,"ok",this.declarationService.getPoliceDeclaration());
         }
         catch (Exception e){
             return new JsonModel(Constante.ERROR_CODE,e.getMessage(),null);
