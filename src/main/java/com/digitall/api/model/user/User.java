@@ -29,7 +29,7 @@ public class User {
     private String role;
     private int ministry;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Token> tokenList;
 
     @ManyToOne(fetch = FetchType.EAGER)

@@ -34,10 +34,10 @@ public class Declaration {
     @Transient
     private String qrCode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "digitall_user",insertable = false,updatable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private User user;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "digitall_user",insertable = false,updatable = false)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ministry",insertable = false,updatable = false)

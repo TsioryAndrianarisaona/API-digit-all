@@ -64,7 +64,8 @@ public class DeclarationServiceImpl implements DeclarationService {
     @Override
     public List<Declaration> getPoliceDeclaration() throws Exception {
         try {
-            return this.declarationRepository.findByMinistry(1);
+            List<Declaration> declarations=this.declarationRepository.findByMinistry(1);
+            return declarations;
         }
         catch (Exception e){
             throw e;
