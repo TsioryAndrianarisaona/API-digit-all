@@ -18,9 +18,9 @@ CREATE TABLE MINISTRY
     state int
 );
 INSERT INTO MINISTRY
-VALUES (default, 'Ministère de la défense nationale', 1);
+VALUES (default, 'Ministère de la defense nationale', 1);
 INSERT INTO MINISTRY
-VALUES (default, 'Ministère de l éducation nationale ', 1);
+VALUES (default, 'Ministère de l education nationale ', 1);
 INSERT INTO MINISTRY
 VALUES (default, 'Ministère du transport', 1);
 CREATE TABLE DIGITALL_USER
@@ -37,7 +37,7 @@ CREATE TABLE DIGITALL_USER
             REFERENCES MINISTRY (id)
 );
 INSERT INTO DIGITALL_USER VALUES (default ,'tsiory@defense.mg','1e3e84f0a3bfea349a18ff6e2dccfb3866b9d11f','Andrianarisaona','Tsiory ','Patrouilleur de nuit',1);
-INSERT INTO DIGITALL_USER VALUES (default ,'tsiory@men.mg','1e3e84f0a3bfea349a18ff6e2dccfb3866b9d11f','Andrianarisaona','Tsiory ','Verificateur de diplôme',2);
+INSERT INTO DIGITALL_USER VALUES (default ,'tsiory@men.mg','1e3e84f0a3bfea349a18ff6e2dccfb3866b9d11f','Andrianarisaona','Tsiory ','Verificateur de diplome',2);
 INSERT INTO DIGITALL_USER VALUES (default ,'tsiory@mttm.mg','1e3e84f0a3bfea349a18ff6e2dccfb3866b9d11f','Andrianarisaona','Tsiory ','Police de la route',3);
 CREATE TABLE TOKEN
 (
@@ -63,10 +63,10 @@ CREATE TABLE CITIZEN(
     commune VARCHAR (100),
     address TEXT
 );
-INSERT INTO CITIZEN VALUES (default ,'Andrianaivoravelona','Sandy Lovanirina Jonathan','','1998-11-27',1,'333F0662D395FBCA621F63769E469FC4665010C4','261346969433','FIATA','TANA REV','Lot VC 5 Ambanidia');
+INSERT INTO CITIZEN VALUES (default ,'Andrianaivoravelona','Sandy Lovanirina Jonathan','','1998-11-27',1,'333F0662D395FBCA621F63769E469FC4665010C4','261346969433','FIATA','TANA REV','Ex cite des mines Ambatokaranana Logt 12');
 INSERT INTO CITIZEN VALUES (default ,'Andrianarisaona','Misaina Tsiory Tafita','','1999-08-21',1,'E9AC5601CEDD8747FDD7C911329F9A0BA8B78A19','261346969433','Ambanidia-Miandrarivo','TANA REV','Lot IBM 25 Bis Tsaralalana');
-INSERT INTO CITIZEN VALUES (default ,'Rakozotozanany','Mialy','','1998-03-31',0,'BBD60495FC36A9FE28159B64EB815F9CD24EC0B0','261346969433','Androndrakely-SaropodyAntonta','TANA REV','Lot 130 67Ha Sud');
-INSERT INTO CITIZEN VALUES (default ,'Ramanantsoa','Anjara','','1997-04-30',0,'BBD60495FC36A9FE28159B64EB815F9CD24EC0B047','261346969433','Androndrakely-SaropodyAntonta','TANA REV','2S 44 Anjanahary');
+INSERT INTO CITIZEN VALUES (default ,'Rakozotozanany','Mialy','','1998-03-31',0,'BBD60495FC36A9FE28159B64EB815F9CD24EC0B0','261346969433','Androndrakely-SaropodyAntonta','TANA REV','Anjanahary');
+INSERT INTO CITIZEN VALUES (default ,'Ramanantsoa','Anjara','','1997-04-30',1,'BBD60495FC36A9FE28159B64EB815F9CD24EC0B047','261346969433','Androndrakely-SaropodyAntonta','TANA REV','Lot 130 67Ha Sud');
 CREATE TABLE DECLARATION(
     id SERIAL PRIMARY KEY,
     citizen INT,
@@ -89,7 +89,7 @@ CREATE TABLE EMPOWERMENT(
     state INT,
     CONSTRAINT fk_empowerment_ministry FOREIGN KEY(ministry) REFERENCES  MINISTRY(id)
 );
-INSERT INTO EMPOWERMENT VALUES (default ,'Déclaration de vol',1,1);
+INSERT INTO EMPOWERMENT VALUES (default ,'Declaration de vol',1,1);
 INSERT INTO EMPOWERMENT VALUES (default ,'Bagarre de rue',1,1);
 --data of empowerment
 CREATE TABLE BURGLARY(
@@ -118,8 +118,8 @@ CREATE TABLE NIVEAU(
 );
 INSERT INTO NIVEAU values (default , 'Fokontany','group','font-awesome');
 INSERT INTO NIVEAU values (default , 'Commune','home','antdesign');
-INSERT INTO NIVEAU values (default , 'Tribunal','hammer','font-awesome-5');
-INSERT INTO NIVEAU values (default , 'Office du Bacc','cast-education','material-community-icons');
+INSERT INTO NIVEAU values (default , 'Tribunal','balance-scale','font-awesome');
+INSERT INTO NIVEAU values (default , 'Office du Bacc','cast-education','material-community');
 
 CREATE TABLE DOCUMENT (
     id SERIAL PRIMARY KEY,
@@ -129,13 +129,13 @@ CREATE TABLE DOCUMENT (
     CONSTRAINT fk_document_niveau FOREIGN KEY (niveau) REFERENCES NIVEAU(id)
 );
 
-INSERT INTO DOCUMENT VALUES (default ,'Certificat de résidence',90,1);
+INSERT INTO DOCUMENT VALUES (default ,'Certificat de residence',90,1);
 INSERT INTO DOCUMENT VALUES (default ,'Certificat de vie',90,1);
 INSERT INTO DOCUMENT VALUES (default ,'Acte de naissance',90,2);
 INSERT INTO DOCUMENT VALUES (default ,'Acte de naissance traduit',90,3);
-INSERT INTO DOCUMENT VALUES (default ,'Bulletin numéro 3',-1,3);
-INSERT INTO DOCUMENT VALUES (default ,'Diplôme bacc',-1,4);
-INSERT INTO DOCUMENT VALUES (default ,'Relevé de note Bacc',-1,4);
+INSERT INTO DOCUMENT VALUES (default ,'Bulletin numero 3',-1,3);
+INSERT INTO DOCUMENT VALUES (default ,'Diplome bacc',-1,4);
+INSERT INTO DOCUMENT VALUES (default ,'Releve de note Bacc',-1,4);
 
 CREATE TABLE FOLDER(
     id SERIAL PRIMARY KEY,
@@ -143,8 +143,12 @@ CREATE TABLE FOLDER(
     citizen int,
     CONSTRAINT fk_folder_citizen FOREIGN KEY (citizen) REFERENCES CITIZEN(id)
 );
-INSERT INTO FOLDER VALUES (default ,'Document passeport',1);
-INSERT INTO FOLDER VALUES (default ,'Document inscription université',1);
+-- INSERT INTO FOLDER VALUES (default ,'Documents passeport',1);
+-- INSERT INTO FOLDER VALUES (default ,'Documents inscription université',1);
+-- INSERT INTO FOLDER VALUES (default ,'Documents administratif',2);
+-- INSERT INTO FOLDER VALUES (default ,'Documents d \'évacuation sanitaire',3);
+-- INSERT INTO FOLDER VALUES (default ,'Documents de migration',4);
+-- INSERT INTO FOLDER VALUES (default ,'Documents d'étude ',4);
 
 CREATE TABLE FOLDER_DOCUMENT(
   id SERIAL PRIMARY KEY,
@@ -172,6 +176,7 @@ CREATE TABLE PERMIS(
     CONSTRAINT fk_permis_permiscitizen FOREIGN KEY (citizen) REFERENCES CITIZEN(id)
 );
 
-INSERT INTO PERMIS VALUES (default ,'0545099T','2015-07-01','Antananarivo',0,0,1,0,0,0,0,1);
-INSERT INTO PERMIS VALUES (default ,'0545099T','2017-06-04','Antananarivo',0,0,1,0,0,0,0,2);
-INSERT INTO PERMIS VALUES (default ,'0545099T','2018-01-07','Antananarivo',0,0,1,0,0,0,0,3);
+INSERT INTO PERMIS VALUES (default ,'0145099T','2015-07-01','Antananarivo',0,0,1,0,0,0,0,1);
+INSERT INTO PERMIS VALUES (default ,'0545029T','2017-06-04','Antananarivo',0,0,1,0,0,0,0,2);
+INSERT INTO PERMIS VALUES (default ,'0555099T','2018-01-07','Antananarivo',0,0,1,0,0,0,0,3);
+INSERT INTO PERMIS VALUES (default ,'8555099T','2019-09-07','Antananarivo',0,0,1,0,0,0,0,4);

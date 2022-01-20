@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface FolderService {
     public List<Folder> findFolderByCitizen(String citizen) throws Exception;
-
+    public List<Folder> saveFolder(Folder folder)throws Exception;
 }

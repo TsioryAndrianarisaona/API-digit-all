@@ -11,4 +11,13 @@ public class JsonModel {
     private int code;
     private String message;
     private Object data;
+
+    @Override
+    public String toString() {
+        return "JsonModel{" +
+                "code=" + code +
+                ", message='" + message + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }

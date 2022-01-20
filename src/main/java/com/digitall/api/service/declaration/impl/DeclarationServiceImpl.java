@@ -54,7 +54,7 @@ public class DeclarationServiceImpl implements DeclarationService {
     @Override
     public List<Declaration> getDeclarations(Citizen citizen) throws Exception {
         try {
-            return this.declarationRepository.findByCitizen(citizen.getId().intValue());
+            return this.declarationRepository.findByMinistryOrderByIdDesc(citizen.getId().intValue());
         }
         catch (Exception e){
             throw e;
@@ -64,7 +64,7 @@ public class DeclarationServiceImpl implements DeclarationService {
     @Override
     public List<Declaration> getPoliceDeclaration() throws Exception {
         try {
-            List<Declaration> declarations=this.declarationRepository.findByMinistry(1);
+            List<Declaration> declarations=this.declarationRepository.findByMinistryOrderByDateDeclarationDesc(1);
             return declarations;
         }
         catch (Exception e){

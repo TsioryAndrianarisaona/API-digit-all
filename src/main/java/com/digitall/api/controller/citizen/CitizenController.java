@@ -4,6 +4,8 @@ import com.digitall.api.model.bean.Constante;
 import com.digitall.api.model.bean.JsonModel;
 import com.digitall.api.service.citizen.CitizenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -40,7 +42,9 @@ public class CitizenController {
             return new JsonModel(Constante.SUCCESS_CODE,"authenticate",this.citizenService.scanAndAuthenticate(requestBody));
         }
         catch (Exception e){
+            e.printStackTrace();
             return new JsonModel(Constante.ERROR_CODE,e.getMessage(),null);
         }
     }
+
 }

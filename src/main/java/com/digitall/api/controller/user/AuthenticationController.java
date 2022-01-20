@@ -19,6 +19,8 @@ public class AuthenticationController {
     public JsonModel login(@RequestBody User user)
     {
         try {
+            user.setLogin(user.getLogin().trim());
+            user.setPassword(user.getPassword().trim());
             Token token=userService.login(user);
             Map<String, Object> response=new HashMap<String, Object>();
             response.put("token",token.getToken());

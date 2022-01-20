@@ -21,4 +21,15 @@ public class FolderServiceImpl implements FolderService {
             throw e;
         }
     }
+
+    @Override
+    public List<Folder> saveFolder(Folder folder) throws Exception {
+        try {
+            this.folderRepository.save(folder);
+            return this.findFolderByCitizen(String.valueOf(folder.getCitizen()));
+        }
+        catch (Exception e){
+            throw e;
+        }
+    }
 }

@@ -27,4 +27,5 @@ public class Citizen {
     private String phone;
     private String fokontany;
     private String commune;
+    private String address;
 }

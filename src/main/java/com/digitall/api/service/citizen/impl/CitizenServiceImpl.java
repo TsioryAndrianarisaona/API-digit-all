@@ -66,6 +66,7 @@ public class CitizenServiceImpl implements CitizenService {
             if(code == null || code.trim().compareToIgnoreCase("")==0){
                 this.cartValidationService.generateValidation(citizen);
                 result.put("anyCode",false);
+                result.put("codeConf",Constante.CODE_CONFRIMATION);
             }else{
                 this.cartValidationService.verifyCode(citizen,code);
                 result.put("anyCode",true);
